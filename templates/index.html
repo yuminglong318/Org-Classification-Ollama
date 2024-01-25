@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Organization Classification</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style>
+            #title {
+                width: 50%; /* you can use px, em, rem, or % */
+            }
+            #desc {
+                width: 60%;
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Organization</h1>
+        <form id="org-form">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="desc">Description:</label><br>
+            <textarea id="desc" name="desc"></textarea><br>
+            <input type="submit" value="Submit">
+        </form>
+        <h2>Category</h2>
+        <input type="text" id="category" name="category" readonly>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('#org-form').on('submit', function(e) {
+                 e.preventDefault();
+                 var title = $('#title').val();
+                 var desc = $('#desc').val();
+                 $.ajax({
+                    url: '/api/org/category/ollama/v0',
+                    headers: {
+                        "Content-Type": "application/json"
+                     },
+                    data: JSON.stringify({title: title, description: desc}),
+                    type: 'POST',
+                    success: function(response){
+                        $('#category').val(response.category);
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                 });
+           });
+        });
+        </script>
+    </body>
+</html>

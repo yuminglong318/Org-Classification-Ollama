@@ -61,8 +61,9 @@ def get_classification_ollama(description, title):
     """
 
     output = bot.chat(human_message)
-
-    return output
+    for category in categories:
+        if category in output:
+            return category
 
 description = "Tau Beta Sigma is a National Honorary Band Sorority that provides service to collegiate bands, encourages the advancement of women in the band profession, and promotes and enriches an appreciation of band music through recognition, leadership development."
 title = "Tau Beta Sigma"
